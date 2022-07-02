@@ -5,6 +5,7 @@ const io = require('socket.io')(PORT, {
     },
 })
 
+console.log("Port is " + PORT)
 
 let users = {}
 
