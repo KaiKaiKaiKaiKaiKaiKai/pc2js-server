@@ -1,4 +1,4 @@
-const PORT = process.env.PORT
+const PORT = process.env.PORT || 3000
 const io = require('socket.io')(PORT, {
     cors: {
         origin: ['http://kn215.brighton.domains', 'https://kn215.brighton.domains'],
