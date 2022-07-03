@@ -23,15 +23,24 @@ io.on('connection', socket => {
 
     socket.on('reset-user-animation', () => {
         users[socket.id].animation = 'idle-bottom'
+        users[socket.id].setY = -43
     })
 
-    socket.on('update-user-location', (x, y, angle) => {
+    socket.on('send-anim', (anim, setY, setX, scaleX) => {
+        users[socket.id].animation = anim
+        users[socket.id].setY = setY
+        users[socket.id].setX = setX
+        users[socket.id].scaleX = scaleX
+        io.emit('send-anim', socket.id, anim, users[socket.id].x, users[socket.id].y, setY, setX, scaleX)
+    })
+
+    socket.on('update-user-location', (x, y) => {
         users[socket.id].x = x
         users[socket.id].y = y
 
         console.log(socket.id + " moved to new location")
 
-        io.emit('update-user-location', socket.id, x, y, angle)
+        io.emit('update-user-location', socket.id, x, y)
     })
 
     socket.on('set-username', (username) => {
@@ -62,6 +71,9 @@ function initUser(socket) {
     socket.user.x = 320
     socket.user.y = 240
     socket.user.animation = 'idle-bottom'
+    socket.user.setY = -43
+    socket.user.setX = 0
+    socket.user.scaleX = 1
 }
 
 function setUsername (socket, username) {
