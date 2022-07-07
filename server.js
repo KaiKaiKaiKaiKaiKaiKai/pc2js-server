@@ -24,6 +24,8 @@ io.on('connection', socket => {
     socket.on('reset-user-animation', () => {
         users[socket.id].animation = 'idle-bottom'
         users[socket.id].setY = -43
+        users[socket.id].setX = 0
+        users[socket.id].scaleX = 1
     })
 
     socket.on('send-anim', (anim, setY, setX, scaleX) => {
@@ -32,6 +34,10 @@ io.on('connection', socket => {
         users[socket.id].setX = setX
         users[socket.id].scaleX = scaleX
         io.emit('send-anim', socket.id, anim, users[socket.id].x, users[socket.id].y, setY, setX, scaleX)
+    })
+
+    socket.on('throw-snowball', (animKey, scaleX) => {
+        io.emit('throw-snowball', socket.id, animKey, scaleX)
     })
 
     socket.on('update-user-location', (x, y) => {
@@ -58,6 +64,13 @@ io.on('connection', socket => {
         io.emit('send-message', socket.id, message)
     })
 
+    socket.on('send-emote', (emote) => {
+
+        //console.log(socket.id + " sent new message: " + message)
+
+        io.emit('send-emote', socket.id, emote)
+    })
+
     socket.on('disconnect', () => {
         delete users[socket.id];
         io.emit('delete-user', socket.id)
@@ -68,8 +81,8 @@ io.on('connection', socket => {
 function initUser(socket) {
     socket.user = {}
     socket.user.username = "Guest"
-    socket.user.x = 320
-    socket.user.y = 240
+    socket.user.x = Math.floor(Math.random() * 20) + 310
+    socket.user.y = Math.floor(Math.random() * 20) + 230
     socket.user.animation = 'idle-bottom'
     socket.user.setY = -43
     socket.user.setX = 0
