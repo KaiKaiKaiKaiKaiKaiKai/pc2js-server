@@ -14,14 +14,13 @@ initUser(bot)
 
 bot.user.username = "Tim"
 users.bot = bot.user
-const botDelay = Math.random() * (240000 - 120000) + 120000
 
-function randomBotBehviour() {
+function randomBotBehaviour() {
 
     // Generate a random delay between 2 to 4 minutes (120,000 to 240,000 milliseconds)
     const delay = Math.random() * (240000 - 120000) + 120000
-    const y = -43 + Math.random() * 200 - 100
-    const x = Math.random() * 400 - 200
+    const y = Math.floor(Math.random() * (475 - 181 + 1)) + 181
+    const x = Math.floor(Math.random() * (638 - 190 + 1)) + 190
 
     io.emit('update-user-location', "bot", x, y)
     
@@ -35,6 +34,13 @@ function randomBotBehviour() {
         io.emit('send-message', "bot", randomPhrase)
     }
 }
+
+function idleBot() {
+    randomBotBehaviour()
+    setTimeout(idleBot, Math.random() * (240000 - 120000) + 120000)
+}
+
+idleBot()
 
 io.on('connection', socket => {
     console.log(socket.id + " connected")
@@ -89,7 +95,7 @@ io.on('connection', socket => {
         console.log(socket.id + " sent new message: " + message)
 
         io.emit('send-message', socket.id, message)
-        if (message.startsWith("!bot")) { randomBotBehviour() } 
+        if (message.startsWith("!bot")) { randomBotBehaviour() } 
     })
 
     socket.on('send-emote', (emote) => {
