@@ -8,6 +8,39 @@ const io = require('socket.io')(PORT, {
 console.log("Port is " + PORT)
 
 let users = {}
+const bot = {}
+
+initUser(bot)
+
+bot.user.username = "Tim"
+users.bot = bot
+
+function randomBotBehviour() {
+
+    // Generate a random delay between 2 to 4 minutes (120,000 to 240,000 milliseconds)
+    const delay = Math.random() * (240000 - 120000) + 120000
+    const y = -43 + Math.random() * 200 - 100
+    const x = Math.random() * 400 - 200
+
+    io.emit('update-user-location', "bot", x, y)
+    
+    const userAmount = Object.keys(users).length
+    const phrases = ['', "Lovely day, isn't it?", "It was the axe what did it.", "It just happened. All so fast.", "With the soil, she now rests.", "Care to acompany me in some light conversation?", "AND I'LL FUCKING DO IT AGAIN!",
+                    "I have but one regret.", "Only " + userAmount + " about today? Good.", "Has anyone seen my wife?", "Under the floorboards." ]
+    const randomIndex = Math.floor(Math.random() * phrases.length);
+    const randomPhrase = phrases[randomIndex];
+
+    if (randomPhrase) {
+        io.emit('send-message', "bot", randomPhrase)
+    }
+    
+
+    // Call the function again after the random delay
+    setTimeout(myFunction, delay)
+}
+
+// Initial call to the function
+randomBotBehviour();
 
 io.on('connection', socket => {
     console.log(socket.id + " connected")
