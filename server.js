@@ -36,7 +36,7 @@ function randomBotBehviour() {
     
 
     // Call the function again after the random delay
-    setTimeout(myFunction, delay)
+    setTimeout(randomBotBehviour, delay)
 }
 
 // Initial call to the function
