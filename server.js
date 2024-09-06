@@ -25,10 +25,10 @@ function randomBotBehaviour() {
     io.emit('update-user-location', "bot", x, y)
     
     const userAmount = Object.keys(users).length - 1
-    const usernames = Array.from(Object.values(users)).filter(({name}) => name !== "Tim").map(({name}) => name)
+    const usernames = Array.from(Object.values(users)).filter(({username}) => name !== "Tim").map(({username}) => username)
     const randomUsername = usernames[Math.floor(Math.random() * usernames.length)]
     const phrases = ['', "Lovely day, isn't it?", "It was the axe what did it.", "It just happened. All so fast.", "With the soil, she now rests.", "Care to acompany me in some light conversation?", "AND I'LL FUCKING DO IT AGAIN!",
-                    "I have but one regret.", "Only " + userAmount + " about today? Good.", "Has anyone seen my wife?", "Under the floorboards.", "That " + randomUsername + "is on my list..." ]
+                    "I have but one regret.", "Only " + userAmount + " about today? Good.", "Has anyone seen my wife?", "Under the floorboards.", "That " + randomUsername + " is on my list..." ]
     const randomPhrase = phrases[Math.floor(Math.random() * phrases.length)]
 
     if (randomPhrase) {
