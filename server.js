@@ -89,7 +89,7 @@ io.on('connection', socket => {
         console.log(socket.id + " sent new message: " + message)
 
         io.emit('send-message', socket.id, message)
-        if (message.startsWith("!bot") { randomBotBehviour() } 
+        if (message.startsWith("!bot")) { randomBotBehviour() } 
     })
 
     socket.on('send-emote', (emote) => {
