@@ -13,7 +13,8 @@ const bot = {}
 initUser(bot)
 
 bot.user.username = "Tim"
-users.bot = bot
+users.bot = bot.user
+const botDelay = Math.random() * (240000 - 120000) + 120000
 
 function randomBotBehviour() {
 
@@ -33,14 +34,7 @@ function randomBotBehviour() {
     if (randomPhrase) {
         io.emit('send-message', "bot", randomPhrase)
     }
-    
-
-    // Call the function again after the random delay
-    setTimeout(randomBotBehviour, delay)
 }
-
-// Initial call to the function
-randomBotBehviour();
 
 io.on('connection', socket => {
     console.log(socket.id + " connected")
@@ -95,6 +89,7 @@ io.on('connection', socket => {
         console.log(socket.id + " sent new message: " + message)
 
         io.emit('send-message', socket.id, message)
+        if (message.startsWith("!bot") { randomBotBehviour() } 
     })
 
     socket.on('send-emote', (emote) => {
